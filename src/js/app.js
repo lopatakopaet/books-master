@@ -85,7 +85,7 @@ function findBooksByName(name) {
 }
 
 if (localStorage.getItem('books') == null) {
-    return getBooksFromServer()
+    getBooksFromServer()
         .then(res => {
             renderBooksList(res);
             saveBooks(res);
