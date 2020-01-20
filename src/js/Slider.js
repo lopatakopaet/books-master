@@ -29,12 +29,18 @@ export default class Slider {
             }
             e.stopPropagation()
         });
-        document.addEventListener('click',  (e) => {
+        document.addEventListener('click', (e) => {
             let _this = e.target;
-            if (!_this.matches('.leftArrow') && !_this.matches('.rightArrow') && !_this.matches('.block_photo img') ){
+            if (!_this.matches('.leftArrow') && !_this.matches('.rightArrow') && !_this.matches('.block_photo img')) {
                 this.destroy();
             }
         });
+        // document.querySelector('.book_img').addEventListener('click', (e) => {
+        //     let _this = e.target;
+        //     if (!_this.matches('.leftArrow') && !_this.matches('.rightArrow') && !_this.matches('.block_photo img')) {
+        //         this.destroy();
+        //     }
+        // });
     }
 
     movePhotosRight() {
@@ -53,25 +59,41 @@ export default class Slider {
         this.photoElem.src = this.photos[this.count];
     }
 
-    hideArrow(){
-        if (this.photos.length == 1){
+    hideArrow() {
+        if (this.photos.length == 1) {
             return 'hide'
         }
     }
 
+    // render() {
+    //     document.querySelector('.slider_wrap').innerHTML = `
+    //         <div class="slider">
+    //             <div class="leftArrow ${this.hideArrow()}">
+    //                 <img src="./assets/img/arrow.png" alt="">
+    //             </div>
+    //             <div class="block_photo">
+    //                 <img src="" alt="" class="photo">
+    //             </div>
+    //             <div class="rightArrow ${this.hideArrow()}">
+    //                 <img src="./assets/img/arrow.png" alt="">
+    //             </div>
+    //         </div>
+    // `
+    // }
+
     render() {
         document.querySelector('.slider_wrap').innerHTML = `
-    <div class="slider">
-        <div class="leftArrow ${this.hideArrow()}">
-            <img src="./assets/img/arrow.png" alt="">
-        </div>
-        <div class="block_photo">
-            <img src="" alt="" class="photo">
-        </div>
-        <div class="rightArrow ${this.hideArrow()}">
-            <img src="./assets/img/arrow.png" alt="">
-        </div>
-    </div>
+            <div class="slider">
+                <div class="leftArrow ${this.hideArrow()}">
+                    <img src="./assets/img/arrow.png" alt="">
+                </div>
+                <div class="block_photo">
+                    <img src="" alt="" class="photo">
+                </div>
+                <div class="rightArrow ${this.hideArrow()}">
+                    <img src="./assets/img/arrow.png" alt="">
+                </div>
+            </div>
     `
     }
 }

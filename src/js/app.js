@@ -8,7 +8,7 @@ let books = [];
  * @returns {Promise<{publishing_house: (*|string), address: string, data: *, phone: (Document.phone|string|string|*),
  * author: string, theme: string | string[] | string, id: *, photos: *, name_book: *}[] | never>}
  */
-function getBooksFromServer() {
+const getBooksFromServer =()=> {
     return fetch('https://www.googleapis.com/books/v1/volumes?q=Незнайка')
         .then(res => res.json())
         // .then(res=> console.log(res))
@@ -21,7 +21,7 @@ function getBooksFromServer() {
                 publishing_house: elem.volumeInfo.publisher || 'не указано',
                 data: elem.volumeInfo.publishedDate,
                 author: elem.volumeInfo.authors ? elem.volumeInfo.authors.join(', ') : 'не указан',
-                photos: elem.volumeInfo.imageLinks ? [`${elem.volumeInfo.imageLinks.thumbnail}`] : ['https://avatars.mds.yandex.net/get-pdb/1880804/af15630e-6989-45a4-8b37-d031bb7d8139/s375'],
+                photos: elem.volumeInfo.imageLinks ? [`${elem.volumeInfo.imageLinks.thumbnail}`] : ['https://saharokstore.ru/no_photo.png'],
                 name_book: elem.volumeInfo.title,
             }
         }))
@@ -32,26 +32,30 @@ function getBooksFromServer() {
  * @param {{photos: string[]}} book
  * @returns {array} - of photos
  */
-function getPhotos(book) {
+const getPhotos = (book) => {
     return book.photos.slice();
+};
+// const handlerDeleteBook = () => {
+//     let deleteBookElems = Array.from(document.querySelectorAll('.delete_book_btn'));
+//     deleteBookElems.forEach( elem => elem.onclick = (e) =>{
+//         let id = e.target.getAttribute('data-id');
+//         deleteBook(id, books);
+//         renderBooksList(books);
+//     })
+// }
+const handlerDeleteBook = (e) =>{
+        // let id = e.target.getAttribute('data-id');
+        let id = e;
+        console.log(id);
+        // deleteBook(id, books);
+        // renderBooksList(books);
 }
-
-/**
- *
- * @param {array} books - an array of  books
- */
-function renderBooksList(books) {
-    let booksListElem = document.querySelector('.books_list');
-    booksListElem.innerHTML = '';
-    books.forEach(elem => renderBook(booksListElem, elem))
-}
-
 /**
  *
  * @param parentElem - place to render book
  * @param book - book for render
  */
-function renderBook(parentElem, book) {
+const renderBook = (parentElem, book) => {
     let node = document.createElement('div');
     node.classList.add('book_block');
     node.innerHTML = `
@@ -77,10 +81,22 @@ function renderBook(parentElem, book) {
 
 /**
  *
+ * @param {array} books - an array of  books
+ */
+const renderBooksList = (books) => {
+    let booksListElem = document.querySelector('.books_list');
+    booksListElem.innerHTML = '';
+    books.forEach(elem => renderBook(booksListElem, elem))
+}
+
+
+
+/**
+ *
  * @param name - book name
  * @returns {*[]} - found books
  */
-function findBooksByName(name) {
+const findBooksByName = (name) => {
     return books.filter(book => book.name_book.toLowerCase().indexOf(name.toLowerCase()) !== -1);
 }
 
@@ -110,10 +126,10 @@ document.querySelector('.books_list').addEventListener('click', function (e) {
     let id = e.target.getAttribute('data-id');
 
     /////delete book/////
-    if (e.target.matches('.delete_book_btn')) {
-        deleteBook(id, books);
-        renderBooksList(books);
-    }
+    // if (e.target.matches('.delete_book_btn')) {
+    //     deleteBook(id, books);
+    //     renderBooksList(books);
+    // }
     /////edit book/////
     if (e.target.matches('.change_book_btn')) {
         location.href = `/form.html?id=${id}`;
@@ -126,6 +142,8 @@ document.querySelector('.books_list').addEventListener('click', function (e) {
         e.stopPropagation()
     }
 });
+
+
 document.querySelector('.add_book').addEventListener('click', function () {
     location.href = `/form.html`;
 });

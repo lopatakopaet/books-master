@@ -9,7 +9,7 @@ const isIdExist = location.search.split('?id=');
  *
  * @param data - book to add
  */
-function addBook(data) {
+const addBook = (data) => {
     if (data && !data.id) {
         data.id = `Id${Math.floor(Math.random() * (1000000))}`;
     }
@@ -22,7 +22,7 @@ function addBook(data) {
  * @param form - data collection form
  * @returns [] - form data collection
  */
-function serializeForm(form) {
+const serializeForm = (form) => {
     let obj = {};
     obj.photos = [];
     for (let i = form.elements.length - 1; i >= 0; i--) {
@@ -39,7 +39,7 @@ function serializeForm(form) {
 /**
  * render new input for add photo
  */
-function renderInputForAddPhoto() {
+const renderInputForAddPhoto = () => {
     let elem = document.createElement('input');
     elem.type = 'text';
     elem.placeholder = 'добавить фото';
@@ -53,7 +53,7 @@ function renderInputForAddPhoto() {
  * @param form
  * @param obj
  */
-function initForm(form, obj) {
+const initForm =(form, obj) => {
     let numberPhoto = 0;
     if (obj.id) {
         form.dataset.bookId = obj.id;
@@ -73,7 +73,7 @@ function initForm(form, obj) {
     }
 }
 
-function onSubmitForm(form) {
+const onSubmitForm =(form) => {
     let obj = serializeForm(form);
 
     if (Object.values(obj).some(value => {
