@@ -15,13 +15,23 @@ export default class Slider {
     }
 
     setHandlers() {
-        document.querySelector('.rightArrow').addEventListener('click', (e) => {
+        let rightArrow = document.querySelector('.rightArrow');
+        const nextPhoto = (e) =>{
             e.preventDefault();
             if (this.photos.length > 1) {
                 this.movePhotosRight();
             }
             e.stopPropagation()
-        });
+        };
+        rightArrow.onclick = nextPhoto;
+
+        // document.querySelector('.rightArrow').addEventListener('click', (e) => {
+        //     e.preventDefault();
+        //     if (this.photos.length > 1) {
+        //         this.movePhotosRight();
+        //     }
+        //     e.stopPropagation()
+        // });
         document.querySelector('.leftArrow').addEventListener('click', (e) => {
             e.preventDefault();
             if (this.photos.length > 1) {
@@ -29,18 +39,9 @@ export default class Slider {
             }
             e.stopPropagation()
         });
-        document.addEventListener('click', (e) => {
-            let _this = e.target;
-            if (!_this.matches('.leftArrow') && !_this.matches('.rightArrow') && !_this.matches('.block_photo img')) {
-                this.destroy();
-            }
+        document.querySelector('.substrate').addEventListener('click', (e) => {
+            this.destroy();
         });
-        // document.querySelector('.book_img').addEventListener('click', (e) => {
-        //     let _this = e.target;
-        //     if (!_this.matches('.leftArrow') && !_this.matches('.rightArrow') && !_this.matches('.block_photo img')) {
-        //         this.destroy();
-        //     }
-        // });
     }
 
     movePhotosRight() {
@@ -65,25 +66,10 @@ export default class Slider {
         }
     }
 
-    // render() {
-    //     document.querySelector('.slider_wrap').innerHTML = `
-    //         <div class="slider">
-    //             <div class="leftArrow ${this.hideArrow()}">
-    //                 <img src="./assets/img/arrow.png" alt="">
-    //             </div>
-    //             <div class="block_photo">
-    //                 <img src="" alt="" class="photo">
-    //             </div>
-    //             <div class="rightArrow ${this.hideArrow()}">
-    //                 <img src="./assets/img/arrow.png" alt="">
-    //             </div>
-    //         </div>
-    // `
-    // }
-
     render() {
         document.querySelector('.slider_wrap').innerHTML = `
             <div class="slider">
+                <div class="substrate"></div>
                 <div class="leftArrow ${this.hideArrow()}">
                     <img src="./assets/img/arrow.png" alt="">
                 </div>

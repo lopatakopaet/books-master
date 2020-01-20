@@ -1,4 +1,4 @@
-import {getBooksFromLocalStorage,saveBooks,deleteBook,findBookById} from "./common";
+import {getBooksFromLocalStorage, saveBooks, deleteBook, findBookById} from "./common";
 
 let formElem = document.querySelector('form');
 let books = getBooksFromLocalStorage();
@@ -45,15 +45,15 @@ const renderInputForAddPhoto = () => {
     elem.placeholder = 'добавить фото';
     elem.setAttribute('name', 'photo');
     let photosElem = document.querySelector('.photos');
-    photosElem.appendChild(elem)
+    photosElem.appendChild(elem);
 }
 
 /**
  *
- * @param form
- * @param obj
+ * @param form - DOMElement 'form'
+ * @param {object} obj - book obj for editing
  */
-const initForm =(form, obj) => {
+const initForm = (form, obj) => {
     let numberPhoto = 0;
     if (obj.id) {
         form.dataset.bookId = obj.id;
@@ -61,24 +61,29 @@ const initForm =(form, obj) => {
     document.querySelector('.photos').innerHTML = '';
     for (let i = 0; i < obj.photos.length; i++) {
         renderInputForAddPhoto();
-        console.log(obj.photos)
     }
     for (let i = form.elements.length - 1; i >= 0; i--) {
         if (form.elements[i].type === 'text') {
             if (form.elements[i].getAttribute('name') == 'photo') {
                 form.elements[i].value = obj.photos[numberPhoto];
+                console.log(form);
                 numberPhoto++;
-            } else form.elements[i].value = obj[form.elements[i].name];
+            } else {
+                // console.log(obj[form.elements[i].name]);
+                console.log(form);
+                form.elements[i].value = obj[form.elements[i].name];
+            }
+
         }
     }
 }
 
-const onSubmitForm =(form) => {
+const onSubmitForm = (form) => {
     let obj = serializeForm(form);
 
     if (Object.values(obj).some(value => {
         if (Array.isArray(value)) {
-            return value.some( elem => !elem)
+            return value.some(elem => !elem)
         } else {
             return !value;
         }
@@ -89,7 +94,7 @@ const onSubmitForm =(form) => {
     if ('bookId' in form.dataset) {
         let id = formElem.dataset.bookId;
         obj.id = id;
-        deleteBook(id,books);
+        deleteBook(id, books);
         addBook(obj)
     } else addBook(obj);
     location.href = '/';
@@ -103,7 +108,6 @@ if (bookId) {
     initForm(formElem, findBookById(bookId, books));
     formElem.querySelector('input[type="submit"]').value = 'Изменить'
 }
-
 
 formElem.addEventListener('submit', function (e) {
     e.preventDefault();

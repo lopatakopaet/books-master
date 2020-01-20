@@ -127,7 +127,6 @@ form input[type = 'submit']{
 }
 
 .slider_wrap{
-
     position: fixed;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -135,19 +134,18 @@ form input[type = 'submit']{
 }
 .slider{
     position: relative;
-    margin-left: 100px;
     width: 400px;
-    border: 1px solid black;
     font-size: 0;
     display: flex;
     justify-content:center;
     align-items: center;
+
 }
 .slider .block_photo img{
     width: 400px;
 }
 .block_photo{
-
+    z-index: 10;
 }
 .leftArrow, .rightArrow{
     width: 50px;
@@ -166,15 +164,27 @@ form input[type = 'submit']{
 .leftArrow{
     left: -100px;
     transform: translate(0, -50%);
+    z-index: 10;
 }
 .leftArrow img {
     transform: rotate(180deg);
 }
 .rightArrow {
     right: -100px;
-    transform: translate(0, -50%)
+    transform: translate(0, -50%);
+    z-index: 10;
 }
 .hide{
     display: none;
+}
+.substrate{
+    background: grey;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 5;
+    opacity: 0.3;
+    transition: all 1s ease;
+
 }
 
